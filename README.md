@@ -124,10 +124,8 @@ GET /rates?from=USD&to=JPY
 {
   "from": "USD",
   "to": "JPY",
-  "bid": 110.50,
-  "ask": 111.50,
-  "price": 111.00,
-  "timestamp": "2026-01-17T10:30:45.000Z"
+  "price": 0.4592897198716716,
+  "timestamp": "2026-01-17T23:13:21.178Z"
 }
 ```
 
