@@ -44,6 +44,7 @@ The solution is built using a modular, functional programming approach:
 
 - **Functional Design**: Uses Cats Effect for pure functional composition and dependency injection
 - **Error Handling**: Sealed traits for type-safe error representation
+- **Middleware**: Error handling middleware (`ErrorHandling.scala`) provides automatic JSON error responses and translates service errors to HTTP status codes
 - **Configuration**: Externalized configuration for API endpoints and tokens
 - **Testing**: Comprehensive unit tests with dummy implementations for isolated testing
 
