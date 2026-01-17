@@ -163,12 +163,10 @@ GET /rates?from=USD&to=JPY
 
 ## Test Coverage
 
-Comprehensive test suite covering:
+Test suite covering:
 - Domain models (Currency, Rate, Price, Timestamp)
 - Caching behavior and TTL expiration
 - One-Frame service integration
-- Error scenarios and edge cases
-- HTTP routing and protocol handling
 
 Run tests with:
 ```bash
