@@ -9,9 +9,11 @@ The core challenge was to support **10,000 successful requests per day** while t
 **Solution:** Implement a 5-minute TTL cache that fetches all currency pairs in a single request.
 
 **Mathematical Analysis:**
+
 - Maximum possible requests per day: `24 × 60 / 5 = 288 requests`
 - With this approach, we only need ~288 API calls per day (vs. 1,000 available)
 - This guarantees the service never exceeds the API limit, even with consistent traffic
+  > **Note:** The minimum time to live (TTL) for the cache is **87 seconds** to stay within 1,000 requests per day. The default is 5 minutes (300 seconds), which uses only ~288 API calls per day.
 
 ### Architecture
 
@@ -50,7 +52,16 @@ The solution is built using a modular, functional programming approach:
 
 ## Building & Running
 
+### Build & Test Environment
+
+This project was built and tested using the following Docker image:
+
+```json
+"image": "sbtscala/scala-sbt:graalvm-ce-22.3.3-b1-java17_1.12.0_3.3.7"
+```
+
 ### Prerequisites
+
 - Scala 2.13.12
 - SBT (Scala Build Tool)
 - Java 11+
@@ -79,6 +90,7 @@ The service will start on the configured port (default: 8080).
 ### Testing with One-Frame Service
 
 1. **Start the One-Frame mock service:**
+
    ```bash
    docker pull paidyinc/one-frame
    docker run -p 8080:8080 paidyinc/one-frame
@@ -115,11 +127,13 @@ app {
 ## API Response
 
 **Request:**
+
 ```bash
 GET /rates?from=USD&to=JPY
 ```
 
 **Success Response (200):**
+
 ```json
 {
   "from": "USD",
@@ -130,6 +144,7 @@ GET /rates?from=USD&to=JPY
 ```
 
 **Error Response (400/500):**
+
 ```json
 {
   "error": "Unsupported currency pair"
@@ -163,11 +178,13 @@ GET /rates?from=USD&to=JPY
 ## Test Coverage
 
 Test suite covering:
+
 - Domain models (Currency, Rate, Price, Timestamp)
 - Caching behavior and TTL expiration
 - One-Frame service integration
 
 Run tests with:
+
 ```bash
 sbt test
 ```
@@ -175,6 +192,7 @@ sbt test
 ## Dependencies
 
 Key libraries used:
+
 - **Cats & Cats Effect**: Functional programming abstractions
 - **Http4s**: Type-safe HTTP server and client
 - **Circe**: JSON encoding/decoding
@@ -190,11 +208,11 @@ See `project/Dependencies.scala` for complete dependency list.
 - Configuration is externalized and easy to override
 - The caching strategy is optimal given the One-Frame API constraints
 - With a 5-minute TTL, we only use ~288 of the 1,000 allowed daily API requests
-- **The minimum time to live is 87 seconds to stay within 1,000 requests a day**
 
 ## Submission
 
 This solution addresses all requirements:
+
 - ✅ Exchange rates from supported currency pairs
 - ✅ Rates not older than 5 minutes (configurable TTL)
 - ✅ Supports 10,000+ daily requests (with only 288 API calls)
