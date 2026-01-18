@@ -5,12 +5,14 @@ import cats.effect.ConcurrentEffect
 import cats.syntax.either._
 import cats.syntax.flatMap._
 import cats.syntax.traverse._
-import forex.domain.{Rate, Currency}
-import Protocol.RateResponse
+import forex.domain.Currency
+import forex.domain.Rate
+import forex.services.rates.interpreters.oneframe.Protocol.RateResponse
 import org.http4s._
 import org.http4s.circe.jsonOf
 import org.http4s.client.Client
 import org.typelevel.ci.CIString
+
 import errors.OneFrameError
 
 case class OneFrameConfig(
